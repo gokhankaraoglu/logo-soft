@@ -17,7 +17,6 @@ export const personalFormValidation = Yup.object().shape({
     .email("Geçerli bir email adresi girin")
     .required("Email zorunludur"),
   PLK: Yup.string().required("Plaka no zorunludur"),
-  ARCKULTIP: Yup.string().required("Araç kullanım tipi zorunludur"),
   TESBELNO: Yup.string()
     .required("Belge seri no zorunludur")
     .matches(

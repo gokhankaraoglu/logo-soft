@@ -241,7 +241,7 @@ function ProductForm() {
   async function handleLastInsuranceDate(updatedQuestions: SoruListItem[]) {
     if (!lastInsuranceDateRef.current) {
       const lastInsurance = updatedQuestions.find(
-        (item) => item.SORU_ID === 83
+        (item) => item.SORU_ID === 91
       );
       if (lastInsurance?.DEGER_KOD) {
         lastInsuranceDateRef.current = lastInsurance.DEGER_KOD;
