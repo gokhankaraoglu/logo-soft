@@ -95,8 +95,8 @@ export interface PoliceItem {
   DURUM_ACIKLAMA: string;
   POLICE_PARTAJ_GUID: string;
   TAKSIT: unknown | null;
-  BASLAMA_TARIH: unknown | null;
-  BITIS_TARIH: unknown | null;
+  BASLAMA_TARIH: string;
+  BITIS_TARIH: string;
   TANZIM_TARIH: string;
   ESKI_SGR_SIRKET_MUSTERI_ROL_ID: unknown | null;
   ESKI_SGR_SIRKET_MUSTERI_ROL_AD: unknown | null;
@@ -135,6 +135,7 @@ export interface StoredPoliceItem {
   entegrationId: number;
   entegrationKey: string;
   entegrationPoliceNo: string;
+  productCode: string;
 }
 
 export enum EntegrasyonPoliceDurumID {

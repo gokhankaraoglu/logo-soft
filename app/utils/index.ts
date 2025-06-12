@@ -26,6 +26,15 @@ export function formatName(name: string): string {
     .join(" ");
 }
 
+export function formatDate(dateStr?: string): string {
+  if (!dateStr) return "-";
+  const [date] = dateStr.split(" ");
+  if (!date) return "-";
+  const [day, month, year] = date.split("/");
+  if (!day || !month || !year) return dateStr;
+  return `${day}.${month}.${year}`;
+}
+
 export const setSessionStorage = <T>(key: string, value: T): void => {
   try {
     const jsonValue = JSON.stringify(value || "");

@@ -29,7 +29,7 @@ function InformationFormDialog({
             </div>
             <div className="flex flex-col gap-4 px-4 py-6 sm:px-6 md:px-8">
               <p className="text-center text-2xl font-bold mb-10">
-                Maksimum Kasko Sigortası Bilgilendirme Formu
+                Trafik Sigortası Bilgilendirme Formu
               </p>
               <div className="h-[calc(80vh-15rem)] overflow-y-auto">
                 {contractText.map(({ title, description }, index) => (

@@ -43,7 +43,7 @@ const personalInitialValues: PersonalFormElements = {
   EMAIL: "",
   PLK: "",
   TESBELNO: "",
-  SBMARACKLT: "",
+  SBMARACKLT: "1",
 };
 const corporateInitialValues: CorporateFormElements = {
   VKN: "",
@@ -51,7 +51,7 @@ const corporateInitialValues: CorporateFormElements = {
   EMAIL: "",
   PLK: "",
   TESBELNO: "",
-  SBMARACKLT: "",
+  SBMARACKLT: "1",
 };
 
 function ProductForm() {
@@ -169,6 +169,7 @@ function ProductForm() {
       33: "BEYAZ",
       34: "5",
       35: "1499",
+      28: "1",
       21: today,
       22: oneYearLater,
       14: credentials?.TCK ?? null,

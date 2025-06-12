@@ -1,38 +1,35 @@
 export const contractText = [
   {
-    title: "İMM: 2.500.000 TL (Değiştirilebilir)",
-    icon: "frame-money.png",
+    title:
+      "Karşı Tarafa Verilen Zararları Ödeme Hakkı (Zorunlu Mali Sorumluluk)",
     description:
-      "Kaza durumunda, Zorunlu Trafik Sigortası karşı tarafta oluşan hasardan araç başına 200 bin TL, kaza başına toplam 200 bin TL'lik üst limite karşı koruma sağlar. Masraflar teminat limitlerince (bu poliçede 2.500.000 TL) karşılanır.",
+      "Trafik kazasında karşı tarafın aracı, eşyası veya kişisi zarar görürse, bu zararların belirli bir kısmını sizin yerinize sigorta şirketi öder.\nAraç başına 300.000 TL, kaza başına 600.000 TL maddi teminat\nKişi başına 2.700.000 TL, kaza başına otomobil için 13.500.000 TL, motosiklet için 8.100.000 TL bedeni teminat",
   },
   {
-    title: "Muadil Cam (Muafiyetli)",
-    icon: "frame-glass.png",
+    title:
+      "Zorunlu Limitleri Aşan Zararlar İçin Ek Koruma (İhtiyari Mali Mesuliyet)",
     description:
-      "Herhangi bir hasar durumunda poliçede belirtilen servis ve limit bilgileri dahilinde yerli (muadil) veya orjinal cam değişimi sağlanır.",
+      "Kazanın büyüklüğü zorunlu limitleri aşarsa, sigorta şirketi size ilave belirtilen limitlere göre ödeme yapar. Bu sayede yüksek tazminat davalarında cebinizden para çıkmaz.",
   },
   {
-    title: "Tüm Yetkili Servisler ve Özel Servisler",
-    icon: "frame-headphone.png",
+    title: "Hukuki Süreçlerde Masrafların Karşılanması Hakkı (Hukuksal Koruma)",
     description:
-      "Elektrik şebekelerinin yoğun kullanımı ve özellikle saatsel olarak aşırı yüklenmeler sonucu santral kaynaklı olarak voltaj dalgalanmaları ve bu dalgalanmaların batarya üzerinde oluşturduğu ani akım gerilimleri sonrası yanmalar ve patlamalar ile cihazın zarar görmesidir.",
+      "Kazayla ilgili açılan davalarda; avukat, mahkeme, danışma gibi masrafların büyük kısmını sigorta öder. Her bir dava için, %10 muafiyetle toplamda poliçede belirtilen miktara göre destek sağlar. Tahkim başvurusu için de poliçede verilen miktar kadar ödeme yapılır.",
   },
   {
-    title: "Hasar durumunda 15 gün ikame araç",
-    icon: "frame-car.png",
+    title:
+      "Devletin Karşılamadığı Zararlar İçin Güvence (Güvence Hesabı Katılımı)",
     description:
-      "Aracın yaptığı herhangi bir kaza durumunda eksper tarafından yapılan incelemeye göre, hasar almış olan aracın trafiğe çıkmamasına karar verilirse; ilgili sigorta şirketi sigortalıya yedek araç temin eder.",
+      "Karşı tarafın sigortasız olması gibi durumlarda mağduriyet yaşanmaması için güvence hesabına katkı sağlanır. Bu sistem sayesinde devlet destekli zarar telafisi mümkün olur.",
   },
   {
-    title: "Mini Onarım",
-    icon: "frame-tool.png",
+    title: "Sigorta Tahkim Komisyonu'na Başvuru Hakkı",
     description:
-      "Aracın kaporta, boya, iç döşeme, plastik tampon, ön cam gibi hasarlı parçaları poliçede belirtilen limitler dahilinde ücretsiz tamir edilir.",
+      "Sigorta şirketiyle anlaşmazlık yaşarsanız mahkemeye gitmeden hızlı ve masrafsız çözüm için tahkime başvurabilirsiniz.",
   },
   {
-    title: "Yol Yardım",
-    icon: "frame-bag.png",
+    title: "Eksper Seçim Hakkı",
     description:
-      "Kaza veya arıza gibi beklenmedik durumlar için çekme, kurtarma, yardım vb. hizmetlerinin poliçede belirtilen limitler ölçüsünde sağlanması güvence altındadır.",
+      "Rizikonun gerçekleşmesi durumunda sigorta eksperi sigorta ettiren veya sigorta sözleşmesinden menfaat sağlayan kişiler tarafından tayin edilebilir.",
   },
 ];

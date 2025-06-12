@@ -51,7 +51,7 @@ function PaymentSuccess({
             className="mb-10"
           />
           <p className="text-xl font-semibold mb-10">
-            Tebrikler AXA Sigorta’dan #{policeNo} nolu kasko poliçeniz oluştu.
+            Tebrikler, #{policeNo} nolu sigorta poliçeniz oluştu.
           </p>
         </div>
         <div className="mb-6 flex flex-col">

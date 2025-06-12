@@ -3,10 +3,10 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
 import { useEffect, useState, useCallback } from "react";
-import { delay, setSessionStorage } from "../utils";
+import { delay, getSessionStorage, setSessionStorage } from "../utils";
 import { EntegrasyonPoliceDurumID, PoliceItem } from "../types/product";
 import Spinner from "../components/elements/Spinner";
-import { fetchOfferData } from "../utils/api/offer";
+import { fetchOfferList } from "../utils/api/offer";
 import { useRouter } from "next/navigation";
 import Footer from "../components/Footer";
 import OfferItem from "../components/OfferItem";
@@ -16,10 +16,18 @@ import InsuranceDetailDialog from "../dialogs/InsuranceDetailDialog";
 function OfferList() {
   const router = useRouter();
   const [showContract, setShowContract] = useState(false);
-  const [offer, setOffer] = useState<PoliceItem>();
+  const [offerList, setOfferList] = useState<PoliceItem[]>([]);
+  const [selectedOffer, setSelectedOffer] = useState<PoliceItem | undefined>(
+    undefined
+  );
+  const [userVehicle, setUserVehicle] = useState<any>(null);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     const policeId: string | undefined = Cookies.get("policeId");
+    const vehicle: any | undefined = getSessionStorage("vehicle");
+    setUserVehicle(vehicle);
 
     if (!policeId) {
       router.push("/");
@@ -31,15 +39,18 @@ function OfferList() {
 
   const fetchOffer = useCallback(async (policeId: string) => {
     try {
-      const offerData = await fetchOfferData(policeId);
+      const offers = await fetchOfferList(policeId);
       if (
-        offerData?.ENTEGRASYON_POLICE_DURUM_ID ===
-        EntegrasyonPoliceDurumID.BEKLIYOR
+        offers.some(
+          (offer) =>
+            offer.ENTEGRASYON_POLICE_DURUM_ID ===
+            EntegrasyonPoliceDurumID.BEKLIYOR
+        )
       ) {
         await delay(3000);
         fetchOffer(policeId);
       }
-      setOffer(offerData);
+      setOfferList(offers);
     } catch (error) {
       console.error("Failed to fetch police data", error);
     }
@@ -52,6 +63,7 @@ function OfferList() {
       entegrationId: offer.ENTEGRASYON_POLICE_HAREKET_ID,
       entegrationKey: offer.ENTEGRASYON_POLICE_HAREKET_KEY,
       entegrationPoliceNo: offer.ENTEGRASYON_POLICE_NO,
+      productCode: offer.ENTEGRASYON_URUN_KOD,
       startDate: offer.BASLAMA_TARIH,
       endDate: offer.BITIS_TARIH,
       price: offer.TOPLAM_PRIM,
@@ -64,30 +76,69 @@ function OfferList() {
   return (
     <>
       <div className="pt-16 flex flex-col justify-between custom-min-height">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col">
           <Link href="/" className="mb-11 inline-block self-start">
             <span className="flex items-center">
               <Icon icon={Icons.ARROW_LEFT} />
             </span>
           </Link>
-          {offer ? (
+          {offerList.length > 0 ? (
             <>
               <div className="mb-10 text-center">
-                {
-                  <p className="text-[#667085] font-extralight text-lg">
-                    Aracınıza ait kasko tekliflerini burada
-                    görüntüleyebilirsiniz.
-                  </p>
-                }
+                <p className="text-[#667085] font-extralight text-lg">
+                  Aracınıza ait sigorta tekliflerini burada
+                  görüntüleyebilirsiniz.
+                </p>
+                <div className="px-6 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                  <div className="bg-white px-6 py-2 text-xs font-semibold  border-b border-gray-100">
+                    ARAÇ BİLGİLERİ
+                  </div>
+                  {userVehicle && (
+                    <ul className="space-y-1">
+                      <li className="flex items-center text-sm ">
+                        <span className="inline-block w-2 h-2 rounded-full bg-blue-900 mr-2"></span>
+                        <span>{userVehicle.plate || "-"}</span>
+                      </li>
+                      <li className="flex items-center text-sm ">
+                        <span className="inline-block w-2 h-2 rounded-full bg-blue-900 mr-2"></span>
+                        <span>
+                          {userVehicle.year || "-"} {userVehicle.brand || "-"}{" "}
+                          {userVehicle.model || "-"}
+                        </span>
+                      </li>
+                    </ul>
+                  )}
+                </div>
               </div>
               <div className="w-full flex flex-col justify-center items-center gap-y-6 mb-6">
-                <OfferItem
-                  title={offer.ENTEGRASYON_URUN_AD}
-                  company={offer.SGR_SIRKET_MUSTERI_ROL_AD}
-                  price={offer.TOPLAM_PRIM_TL}
-                  policeStatusId={offer.ENTEGRASYON_POLICE_DURUM_ID}
-                  status={offer.DURUM_ACIKLAMA || ""}
-                />
+                {offerList.map((offer) => {
+                  const isSelected =
+                    selectedOffer?.ENTEGRASYON_POLICE_HAREKET_ID ===
+                    offer.ENTEGRASYON_POLICE_HAREKET_ID;
+                  return (
+                    <div
+                      key={offer.ENTEGRASYON_POLICE_HAREKET_ID}
+                      onClick={() => setSelectedOffer(offer)}
+                      className={`w-full flex justify-center cursor-pointer transition-all
+                        ${
+                          isSelected
+                            ? "ring-2 ring-blue-600 bg-blue-50 shadow-lg"
+                            : "hover:ring-2 hover:ring-blue-300 hover:bg-blue-100"
+                        }
+                      rounded-2xl`}
+                    >
+                      <OfferItem
+                        title={offer.ENTEGRASYON_URUN_AD}
+                        company={offer.SGR_SIRKET_MUSTERI_ROL_AD}
+                        productCode={offer.ENTEGRASYON_URUN_KOD}
+                        price={offer.TOPLAM_PRIM_TL}
+                        policeStatusId={offer.ENTEGRASYON_POLICE_DURUM_ID}
+                        startDate={offer.BASLAMA_TARIH}
+                        endDate={offer.BITIS_TARIH}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </>
           ) : (
@@ -100,7 +151,7 @@ function OfferList() {
             saturated
             visible={
               EntegrasyonPoliceDurumID.TEKLIF !==
-              offer?.ENTEGRASYON_POLICE_DURUM_ID
+              selectedOffer?.ENTEGRASYON_POLICE_DURUM_ID
             }
             onClick={() => setShowContract(true)}
           >
@@ -111,7 +162,9 @@ function OfferList() {
       </div>
       <InsuranceDetailDialog
         isOpen={showContract}
-        confirm={() => offer?.TOPLAM_NET_PRIM && selectOffer(offer)}
+        confirm={() =>
+          selectedOffer?.TOPLAM_NET_PRIM && selectOffer(selectedOffer)
+        }
         close={() => setShowContract(false)}
       />
     </>

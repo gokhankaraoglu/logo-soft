@@ -43,7 +43,7 @@ function SelectedOffer() {
             </span>
           </Link>
           <div className="mb-10 text-center">
-            <h2 className="text-2xl font-bold">Kasko Teklifi</h2>
+            <h2 className="text-2xl font-bold">Sigorta Teklifi</h2>
             <p className="text-[#667085] font-extralight text-lg">
               Teklifin detayları aşağıdaki gibidir. Onaylayarak ödeme adımına
               geçebilirsiniz.
@@ -53,14 +53,8 @@ function SelectedOffer() {
             {police ? (
               <Offer
                 formikRef={formikRef}
-                title={police?.title}
-                company={police?.company}
-                startDate={police?.startDate}
-                endDate={police?.endDate}
-                price={police?.price}
-                entegrationId={police?.entegrationId}
-                entegrationPoliceNo={police?.entegrationPoliceNo}
                 setIsProcessing={setIsProcessing}
+                {...police}
               />
             ) : (
               <Spinner />

@@ -14,6 +14,7 @@ import { confirmationForm } from "../utils/validations";
 interface OfferProps extends Omit<StoredPoliceItem, "entegrationKey"> {
   setIsProcessing?: React.Dispatch<React.SetStateAction<boolean>>;
   formikRef: any;
+  productCode: string;
 }
 
 function Offer({
@@ -26,6 +27,7 @@ function Offer({
   entegrationId,
   entegrationPoliceNo,
   setIsProcessing,
+  productCode,
 }: OfferProps) {
   const [userVehicle, setUserVehicle] = useState<any>(null);
   const router = useRouter();
@@ -69,11 +71,23 @@ function Offer({
     <>
       <div className="rounded-xl max-w-[405px] w-full bg-white p-4 border-solid border-[1px] border-[#0F1827] ">
         <div className="mb-2.5 flex">
-          <Image src="/axa-logo.png" alt="Axa logo" width="40" height="40" />
+          <Image
+            src={`/${productCode}.webp`}
+            alt={company}
+            width="40"
+            height="40"
+            className="rounded-full bg-white border border-gray-200 h-12 w-12 object-contain"
+          />
           <div className="ml-2.5 w-full">
             <div className="flex justify-between text-[#0F1827] text-sm font-medium align-middle md:align-top">
               <p>{formatName(title) ?? "-"}</p>
-              <p>₺{price ?? "-"}</p>
+              <span>
+                <span className="font-medium">₺</span>
+                {price?.toLocaleString("tr-TR", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
             </div>
             <p className="flex text-xs font-extralight text-[#667085]">
               {formatName(company)} güvencesiyle
@@ -85,11 +99,11 @@ function Offer({
           <>
             <div className="mb-3">
               <p className="mb-2">{userVehicle.plate || "-"}</p>
-              <div className="flex gap-[3px] text-[#667085]">
-                <span>{userVehicle.year || "-"}</span>
-                <span>{userVehicle.brand || "-"}</span>
-                <span>{userVehicle.model || "-"}</span>
-              </div>
+              <p className="text-[#667085] text-left whitespace-normal break-words">
+                {[userVehicle.year, userVehicle.brand, userVehicle.model]
+                  .filter(Boolean)
+                  .join(" ") || "-"}
+              </p>
             </div>
             <hr className="my-2 border-t-1 border-[#667085]" />
           </>
@@ -107,7 +121,7 @@ function Offer({
           <hr className="my-2 border-t-1 border-[#667085]" />
           <div>
             <p className="font-light text-xs text-[#667085]">
-              Poliçe Başlangıç ve Bitiş Tarihi
+              Sigorta Başlangıç ve Bitiş Tarihi
             </p>
             <p className="text-sm font-normal">
               {startDate} - {endDate}
@@ -127,28 +141,6 @@ function Offer({
         >
           {({ values, setFieldValue }) => (
             <Form className="mt-2.5">
-              <div className="flex flex-col items-start mb-1.5">
-                <div className="flex">
-                  <Field
-                    type="checkbox"
-                    id="declaration"
-                    name="declaration"
-                    className="cursor-pointer"
-                  />
-                  <label
-                    htmlFor="declaration"
-                    className="ml-2 text-xs font-extralight text-[#667085] cursor-pointer"
-                  >
-                    Ödeme adımına geçmek için hasarsızlık beyanını kabul ediniz.
-                  </label>
-                </div>
-                <ErrorMessage
-                  name="declaration"
-                  component="div"
-                  className="text-red-500 text-xs ml-6"
-                />
-              </div>
-
               <div className="flex flex-col">
                 <div className="flex">
                   <Field
