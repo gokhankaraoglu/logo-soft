@@ -1,15 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import Cookies from "js-cookie";
 import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
-import { getSessionStorage } from "../utils";
+import { createExpirationDate, getSessionStorage } from "../utils";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { StoredPoliceItem } from "../types/product";
 import Spinner from "../components/elements/Spinner";
 import Footer from "../components/Footer";
 import Offer from "../components/Offer";
+import { GUID } from "../hooks/useSetGuid";
+import { submitPolicyApprovalSecurePayment } from "../utils/api/payment";
 
 function SelectedOffer() {
   const router = useRouter();
@@ -28,6 +31,37 @@ function SelectedOffer() {
 
     setPolice(selectedPolice);
   }, []);
+
+  async function handleSendForm() {
+    if (!police?.entegrationId) {
+      return;
+    }
+    const expirationDate = createExpirationDate(6);
+    if (setIsProcessing) {
+      setIsProcessing(true);
+    }
+    const locationUrl = window.location.href;
+    const baseURL = new URL(locationUrl).origin;
+
+    const { REDIRECT_URL, TRANSACTION_ID: transactionId } =
+      await submitPolicyApprovalSecurePayment(
+        police?.entegrationId,
+        null,
+        `${baseURL}/odeme/geri-donus`
+      );
+    const policeGuid: string | undefined = Cookies.get(GUID);
+    if (!policeGuid) {
+      router.push("/teklif-form");
+      return;
+    }
+
+    if (REDIRECT_URL) {
+      const payloadValue = [police?.entegrationId, transactionId, REDIRECT_URL];
+      const payloadValueJSON = JSON.stringify(payloadValue);
+      Cookies.set(policeGuid, payloadValueJSON, { expires: expirationDate });
+      window.location.href = REDIRECT_URL;
+    }
+  }
 
   return (
     <>
@@ -66,9 +100,7 @@ function SelectedOffer() {
             className="mb-3.5"
             disabled={!police?.entegrationId || isProcessing}
             onClick={() => {
-              if (formikRef.current) {
-                formikRef.current.handleSubmit();
-              }
+              handleSendForm();
             }}
           >
             {isProcessing

@@ -1,15 +1,8 @@
 "use client";
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { createExpirationDate, formatName, getSessionStorage } from "../utils";
-import { submitPolicyApprovalSecurePayment } from "../utils/api/payment";
+import { formatName, getSessionStorage } from "../utils";
 import { StoredPoliceItem } from "../types/product";
-import { GUID } from "../hooks/useSetGuid";
-import { useRouter } from "next/navigation";
-import InformationFormDialog from "../dialogs/InformationFormDialog";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { confirmationForm } from "../utils/validations";
 
 interface OfferProps extends Omit<StoredPoliceItem, "entegrationKey"> {
   setIsProcessing?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,54 +11,20 @@ interface OfferProps extends Omit<StoredPoliceItem, "entegrationKey"> {
 }
 
 function Offer({
-  formikRef,
   title,
   company,
   price,
   startDate,
   endDate,
-  entegrationId,
   entegrationPoliceNo,
-  setIsProcessing,
   productCode,
 }: OfferProps) {
   const [userVehicle, setUserVehicle] = useState<any>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const vehicle: any | undefined = getSessionStorage("vehicle");
     setUserVehicle(vehicle);
   }, []);
-
-  const [showInformationForm, setShowInformationForm] = useState(false);
-
-  async function handleSendForm() {
-    const expirationDate = createExpirationDate(6);
-    if (setIsProcessing) {
-      setIsProcessing(true);
-    }
-    const locationUrl = window.location.href;
-    const baseURL = new URL(locationUrl).origin;
-
-    const { REDIRECT_URL, TRANSACTION_ID: transactionId } =
-      await submitPolicyApprovalSecurePayment(
-        entegrationId,
-        null,
-        `${baseURL}/odeme/geri-donus`
-      );
-    const policeGuid: string | undefined = Cookies.get(GUID);
-    if (!policeGuid) {
-      router.push("/teklif-form");
-      return;
-    }
-
-    if (REDIRECT_URL) {
-      const payloadValue = [entegrationId, transactionId, REDIRECT_URL];
-      const payloadValueJSON = JSON.stringify(payloadValue);
-      Cookies.set(policeGuid, payloadValueJSON, { expires: expirationDate });
-      window.location.href = REDIRECT_URL;
-    }
-  }
 
   return (
     <>
@@ -128,78 +87,7 @@ function Offer({
             </p>
           </div>
         </div>
-        <Formik
-          innerRef={formikRef}
-          initialValues={{
-            declaration: false,
-            informationForm: false,
-          }}
-          validationSchema={confirmationForm}
-          onSubmit={() => {
-            handleSendForm();
-          }}
-        >
-          {({ values, setFieldValue }) => (
-            <Form className="mt-2.5">
-              <div className="flex flex-col">
-                <div className="flex">
-                  <Field
-                    type="checkbox"
-                    id="informationForm"
-                    name="informationForm"
-                    className="cursor-pointer"
-                  />
-                  <label className="ml-2 text-xs font-extralight text-[#667085]">
-                    <span
-                      className="cursor-pointer"
-                      onClick={() =>
-                        setFieldValue(
-                          "informationForm",
-                          !values.informationForm
-                        )
-                      }
-                    >
-                      Ödeme adımına geçmek için{" "}
-                    </span>
-                    <span
-                      className="text-[#6941C6] underline cursor-pointer"
-                      onClick={() => setShowInformationForm(true)}
-                    >
-                      Sigorta Bilgilendirme Formunu
-                    </span>{" "}
-                    <span
-                      className="cursor-pointer"
-                      onClick={() =>
-                        setFieldValue(
-                          "informationForm",
-                          !values.informationForm
-                        )
-                      }
-                    >
-                      kabul ediniz.
-                    </span>
-                  </label>
-                </div>
-                <ErrorMessage
-                  name="informationForm"
-                  component="div"
-                  className="text-red-500 text-xs ml-6"
-                />
-              </div>
-            </Form>
-          )}
-        </Formik>
       </div>
-      <InformationFormDialog
-        isOpen={showInformationForm}
-        close={() => {
-          setShowInformationForm(false);
-        }}
-        confirm={() => {
-          formikRef.current.setFieldValue("informationForm", true);
-          setShowInformationForm(false);
-        }}
-      />
     </>
   );
 }
