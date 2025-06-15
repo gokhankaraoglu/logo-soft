@@ -107,12 +107,23 @@ const InputSections: React.FC<InputSectionsProps> = memo(
       case 205: // UZATILMIŞ GARANTİ
       case 206: // CİHAZ BEDELİ
       case 5: // PLAKA NO
-      case 30: // BELGE SERI NO
         return (
           <CustomInput
             id={questionCode}
             type={InputType.TEXT}
             name={questionName}
+            onChange={onChange}
+            message={message}
+            touched={touched}
+            value={value ? value.toUpperCase() : value}
+          />
+        );
+      case 30: // BELGE SERI NO
+        return (
+          <CustomInput
+            id={questionCode}
+            type={InputType.TEXT}
+            name="Ruhsat Belge Seri No"
             onChange={onChange}
             message={message}
             touched={touched}
