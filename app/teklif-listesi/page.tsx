@@ -135,6 +135,9 @@ function OfferList() {
                         policeStatusId={offer.ENTEGRASYON_POLICE_DURUM_ID}
                         startDate={offer.BASLAMA_TARIH}
                         endDate={offer.BITIS_TARIH}
+                        offerValidityDate={
+                          offer.TEKLIF_GECERLILIK_TARIH as string
+                        }
                       />
                     </div>
                   );
@@ -142,7 +145,7 @@ function OfferList() {
               </div>
             </>
           ) : (
-            <Spinner />
+            <Spinner className="self-center" />
           )}
         </div>
         <div className="flex flex-col justify-center items-center">
