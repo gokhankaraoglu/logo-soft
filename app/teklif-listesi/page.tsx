@@ -76,7 +76,7 @@ function OfferList() {
   return (
     <>
       <div className="pt-16 flex flex-col justify-between custom-min-height">
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center">
           <Link href="/" className="mb-11 inline-block self-start">
             <span className="flex items-center">
               <Icon icon={Icons.ARROW_LEFT} />
@@ -84,11 +84,10 @@ function OfferList() {
           </Link>
           {offerList.length > 0 ? (
             <>
-              <div className="mb-10 text-center">
-                <p className="text-[#667085] font-extralight text-lg">
-                  Aracınıza ait sigorta tekliflerini burada
-                  görüntüleyebilirsiniz.
-                </p>
+              <p className="text-[#667085] font-extralight text-lg mb-2 text-center">
+                Aracınıza ait sigorta tekliflerini burada görüntüleyebilirsiniz.
+              </p>
+              <div className="w-full flex flex-col justify-center items-center gap-y-6 mb-6 max-w-[405px]">
                 <div className="px-6 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
                   <div className="bg-white px-6 py-2 text-xs font-semibold  border-b border-gray-100">
                     ARAÇ BİLGİLERİ
@@ -109,8 +108,6 @@ function OfferList() {
                     </ul>
                   )}
                 </div>
-              </div>
-              <div className="w-full flex flex-col justify-center items-center gap-y-6 mb-6">
                 {offerList.map((offer) => {
                   const isSelected =
                     selectedOffer?.ENTEGRASYON_POLICE_HAREKET_ID ===
