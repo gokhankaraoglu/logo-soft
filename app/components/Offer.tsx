@@ -69,7 +69,7 @@ function Offer({
         )}
         <div className="text-sm text-black">
           <div>
-            <p className="font-light text-xs text-gray-500">Poliçe No</p>
+            <p className="font-light text-xs text-gray-500">Teklif No</p>
             <p className="text-sm font-normal">{entegrationPoliceNo}</p>
           </div>
           <hr className="my-2 border-t-1" />
