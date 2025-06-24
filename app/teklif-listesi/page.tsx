@@ -12,6 +12,7 @@ import Footer from "../components/Footer";
 import OfferItem from "../components/OfferItem";
 import CustomButton from "../components/elements/CustomButton";
 import InsuranceDetailDialog from "../dialogs/InsuranceDetailDialog";
+import { PAYMENT_ACTIVE_COMPANY_IDS } from "../types/constants";
 
 function OfferList() {
   const router = useRouter();
@@ -22,6 +23,9 @@ function OfferList() {
   );
   const [userVehicle, setUserVehicle] = useState<any>(null);
 
+  function isPaymentActiveCompany(companyId: number): boolean {
+    return PAYMENT_ACTIVE_COMPANY_IDS.includes(companyId);
+  }
   useEffect(() => {}, []);
 
   useEffect(() => {
@@ -112,7 +116,10 @@ function OfferList() {
                   const isSelected =
                     selectedOffer?.ENTEGRASYON_POLICE_HAREKET_ID ===
                     offer.ENTEGRASYON_POLICE_HAREKET_ID;
-                  return (
+                  const isActivePayment = isPaymentActiveCompany(
+                    offer.SGR_SIRKET_MUSTERI_ROL_ID
+                  );
+                  return isActivePayment ? (
                     <div
                       key={offer.ENTEGRASYON_POLICE_HAREKET_ID}
                       onClick={() => setSelectedOffer(offer)}
@@ -137,7 +144,7 @@ function OfferList() {
                         }
                       />
                     </div>
-                  );
+                  ) : null;
                 })}
               </div>
             </>

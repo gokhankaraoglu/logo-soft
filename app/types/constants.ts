@@ -18,3 +18,13 @@ export enum Paths {
   PolicyApprovalSecurePaymentBefore = "/ExternalProduction/POLICY_APPROVAL_SECURE_PAYMENT_BEFORE",
   PolicyApprovalSecurePaymentAfter = "/ExternalProduction/POLICY_APPROVAL_SECURE_PAYMENT_AFTER",
 }
+
+const TURKIYE_SIGORTA_ID = 50091;
+const AXA_SIGORTA_ID = 50003;
+const SOMPO_SIGORTA_ID = 50005;
+
+export const PAYMENT_ACTIVE_COMPANY_IDS = [
+  TURKIYE_SIGORTA_ID,
+  AXA_SIGORTA_ID,
+  SOMPO_SIGORTA_ID,
+];
