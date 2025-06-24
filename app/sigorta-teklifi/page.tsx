@@ -19,6 +19,17 @@ function SelectedOffer() {
   const formikRef = useRef<any>(null);
   const [police, setPolice] = useState<StoredPoliceItem | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showProcessingWarning, setShowProcessingWarning] = useState(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isProcessing) {
+      timer = setTimeout(() => setShowProcessingWarning(true), 30000);
+    } else {
+      setShowProcessingWarning(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isProcessing]);
 
   useEffect(() => {
     const selectedPolice: StoredPoliceItem | undefined =
@@ -92,6 +103,15 @@ function SelectedOffer() {
               />
             ) : (
               <Spinner />
+            )}
+            {showProcessingWarning && (
+              <div className="mt-4 max-w-md w-full bg-yellow-50 border border-yellow-300 text-yellow-900 rounded-lg px-4 py-3 text-center text-sm font-medium shadow">
+                Ödeme adımına geçişte sorun yaşıyorsanız{" "}
+                <a href="tel:05415021302" className="underline font-semibold">
+                  0541 502 13 02
+                </a>{" "}
+                numarası üzerinden bizimle iletişime geçebilirsiniz.
+              </div>
             )}
           </div>
         </div>

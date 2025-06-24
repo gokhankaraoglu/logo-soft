@@ -92,7 +92,7 @@ function OfferList() {
                 Aracınıza ait sigorta tekliflerini burada görüntüleyebilirsiniz.
               </p>
               <div className="w-full flex flex-col justify-center items-center gap-y-6 mb-6 max-w-[405px]">
-                <div className="px-6 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <div className="w-full px-6 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
                   <div className="bg-white px-6 py-2 text-xs font-semibold  border-b border-gray-100">
                     ARAÇ BİLGİLERİ
                   </div>
