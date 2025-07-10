@@ -1,11 +1,19 @@
-import Spinner from "./components/elements/Spinner";
+import Image from "next/image";
 
 function Loading() {
   return (
-    <div className="absolute inset-0 w-full h-full z-50 opacity-50 bg-black text-white">
-      <div className="flex justify-center w-full h-full items-center">
-        <Spinner color="#fff" className="mr-2" />
-        <h1 className="s1"> Yükleniyor</h1>
+    <div className="absolute inset-0 w-full h-full z-50">
+      <div className="w-full h-full bg-white opacity-60 absolute inset-0" />
+      <div className="flex flex-col justify-center w-full h-full items-center relative z-10">
+        <div className="flex items-center">
+          <Image
+            src="/elogo-logo.svg"
+            alt="Logo"
+            width={80}
+            height={80}
+            className="animate-bounce"
+          />
+        </div>
       </div>
     </div>
   );
