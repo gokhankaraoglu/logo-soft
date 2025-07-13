@@ -4,7 +4,7 @@ import { Icon, Icons } from "./elements/Icon";
 import Spinner from "./elements/Spinner";
 import Image from "next/image";
 import { EntegrasyonPoliceDurumID } from "../types/product";
-import { formatDate, formatName } from "../utils";
+import { formatCurrency, formatDate, formatName } from "../utils";
 
 interface OfferItemProps {
   title: string;
@@ -43,11 +43,7 @@ function OfferItem({
             <span className="text-2xl font-bold mt-1">
               {EntegrasyonPoliceDurumID.TEKLIF === policeStatusId ? (
                 <span>
-                  <span className="font-medium">₺</span>
-                  {price?.toLocaleString("tr-TR", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
+                  <span className="font-medium">{formatCurrency(price)}</span>
                 </span>
               ) : EntegrasyonPoliceDurumID.BEKLIYOR === policeStatusId ? (
                 <Spinner />

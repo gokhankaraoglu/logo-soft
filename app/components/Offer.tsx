@@ -1,7 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { formatDate, formatName, getSessionStorage } from "../utils";
+import {
+  formatCurrency,
+  formatDate,
+  formatName,
+  getSessionStorage,
+} from "../utils";
 import { StoredPoliceItem } from "../types/product";
 
 interface OfferProps extends Omit<StoredPoliceItem, "entegrationKey"> {
@@ -41,11 +46,7 @@ function Offer({
             <div className="flex justify-between text-gray-900 text-sm font-medium align-middle md:align-top">
               <p>{formatName(title) ?? "-"}</p>
               <span>
-                <span className="font-medium">₺</span>
-                {price?.toLocaleString("tr-TR", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
+                <span className="font-medium">{formatCurrency(price)}</span>
               </span>
             </div>
             <p className="flex text-xs font-extralight text-gray-500">
