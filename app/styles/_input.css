@@ -81,3 +81,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex !important;
   flex-direction: row-reverse !important;
 }
+.react-datepicker__view-calendar-icon input {
+  padding: 12px !important;
+}
