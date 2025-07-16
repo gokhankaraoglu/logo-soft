@@ -9,9 +9,7 @@ export interface FormElementProps {
   error: string;
   touched: boolean;
   value?: string;
-  onChange: (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
-  ) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
 const FormElement: React.FC<FormElementProps> = memo(

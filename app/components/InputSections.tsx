@@ -9,7 +9,7 @@ export interface InputSectionsProps {
   message: string;
   touched: boolean;
   value?: string;
-  onChange: (event: ChangeEvent<HTMLInputElement> | Date | null) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputSections: React.FC<InputSectionsProps> = memo(

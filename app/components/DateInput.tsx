@@ -7,7 +7,7 @@ interface DateInputProps {
   id: string;
   name: string;
   value?: string;
-  onChange: (event: ChangeEvent<HTMLInputElement> | Date | null) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   message?: string;
   touched?: boolean;
   label?: string;
@@ -41,8 +41,6 @@ const DateInput: React.FC<DateInputProps> = ({
               },
             } as unknown as ChangeEvent<HTMLInputElement>;
             onChange(syntheticEvent);
-          } else {
-            onChange(null);
           }
         }}
         dateFormat="dd/MM/yyyy"
@@ -50,24 +48,15 @@ const DateInput: React.FC<DateInputProps> = ({
         showMonthDropdown
         showYearDropdown
         dropdownMode="select"
-        className={`input-area ${message && touched && "!border-red-500 !border-2"}  focus:border-indigo-600 focus:border-2`}
+        className={`input-area ${
+          message && touched && "!border-red-500 !border-2"
+        }  focus:border-indigo-600 focus:border-2`}
         autoComplete="off"
         showIcon
         customInput={
           <MaskedTextInput
             type="text"
-            mask={[
-              /\d/,
-              /\d/,
-              "/",
-              /\d/,
-              /\d/,
-              "/",
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-            ]}
+            mask={[/\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
           />
         }
         icon={
