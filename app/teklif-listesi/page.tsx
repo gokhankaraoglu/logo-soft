@@ -170,7 +170,7 @@ function OfferList() {
       <InsuranceDetailDialog
         isOpen={showContract}
         confirm={() =>
-          selectedOffer?.TOPLAM_NET_PRIM && selectOffer(selectedOffer)
+          selectedOffer?.TOPLAM_PRIM_TL && selectOffer(selectedOffer)
         }
         close={() => setShowContract(false)}
       />
